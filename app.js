@@ -6,6 +6,16 @@ const app = express();
 const data = JSON.parse(fs.readFileSync("./hospitalListing (1).json", "utf8"));
 let sortData = [...data];
 // Get all hospitals
+
+const logger = (req, res, next) => {
+  const method = req.method;
+  const url = req.url;
+  console.log(method, url);
+  next();
+};
+
+app.use(logger);
+
 app.get("/api/v1/allhospitals", (req, res) => {
   try {
     const itemsPerPage = parseInt(req.query.itemsPerPage) || 30;
